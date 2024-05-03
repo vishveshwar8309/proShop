@@ -1,0 +1,6 @@
+{
+    "editor.suggest.showStatusBar": false,
+    "debug.showInStatusBar": "onFirstSessionStart",
+    "problems.showCurrentInStatus": false,
+    "workbench.settings.useSplitJSON": false
+}
