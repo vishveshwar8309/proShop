@@ -5,7 +5,6 @@ import {
     createRoutesFromElements,
     RouterProvider,
     Route,
-    Routes,
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "./assets/styles/bootstrap.custom.css";
