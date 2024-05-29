@@ -28,6 +28,10 @@ function CartScreen() {
     dispatch(removeFromCart(id));
   };
 
+  const checkOutHandler = async () => {
+    navigate("/login?redirect=/shipping");
+  };
+
   return (
     <Row>
       <Col md={8}>
@@ -100,9 +104,11 @@ function CartScreen() {
             </ListGroup.Item>
             <ListGroup.Item>
               <Button
+                variant="dark"
                 className="btn-blocked"
                 type="button"
                 disabled={cartItems.length === 0}
+                onClick={checkOutHandler}
               >
                 Proceed to Checkout
               </Button>

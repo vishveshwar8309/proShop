@@ -1,11 +1,30 @@
-import { Badge, Navbar, Nav, Container } from "react-bootstrap";
+import { Badge, Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import logo from "../assets/logo.png";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useLogoutMutation } from "../slices/usersApiSlice";
+import { logout } from "../slices/authSlice";
 
 const Headers = () => {
   const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [logoutApi] = useLogoutMutation();
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApi().unwrap();
+      dispatch(logout());
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <header>
@@ -31,12 +50,38 @@ const Headers = () => {
                   )}
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/user">
-                <Nav.Link>
-                  <FaUser />
-                  signin
-                </Nav.Link>
-              </LinkContainer>
+              {userInfo ? (
+                <NavDropdown title={userInfo.name} id="username">
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link>
+                    <FaUser />
+                    signin
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown title="admin" id="adminuser">
+                  <LinkContainer to="/admin/productslist">
+                    <NavDropdown.Item>Products</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <LinkContainer to="/admin/userslist">
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <LinkContainer to="/admin/orderslist">
+                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -21,5 +21,5 @@ export const updateCart = (state) => {
   //storing locally after updating
   localStorage.setItem("cart", JSON.stringify(state));
 
-  // return state;
+  return state;
 };
