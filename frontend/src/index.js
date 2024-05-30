@@ -6,9 +6,10 @@ import {
   RouterProvider,
   Route,
 } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./store";
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+import { Provider } from "react-redux";
+import { HelmetProvider } from 'react-helmet-async';
+import store from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "./assets/styles/bootstrap.custom.css";
 import "./assets/styles/index.css";
@@ -34,7 +35,10 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<Home />} />
-      <Route path="/product/:id" element={<ProductScreen />} />
+      <Route path="/search/:keyword" element={<Home />} />
+      <Route path="/page/:pageNumber" element={<Home />} />
+      <Route path="/search/:keyword/page/:pageNumber" element={<Home />} />
+      <Route path="/products/:id" element={<ProductScreen />} />
       <Route path="/cart" element={<CartScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
@@ -50,6 +54,7 @@ const router = createBrowserRouter(
       <Route path="" element={<AdminRoute />}>
         <Route path="/admin/orderslist" element={<OrderListScreen />} />
         <Route path="/admin/productslist" element={<ProductListScreen />} />
+        <Route path="/admin/productslist/:pageNumber" element={<ProductListScreen />} />
         <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
         <Route path="/admin/userslist" element={<UserListScreen />} />
       </Route>
@@ -60,10 +65,12 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PayPalScriptProvider deferLoading={true}>
-        <RouterProvider router={router} />
-      </PayPalScriptProvider>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <PayPalScriptProvider deferLoading={true}>
+          <RouterProvider router={router} />
+        </PayPalScriptProvider>
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );

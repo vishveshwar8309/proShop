@@ -50,7 +50,7 @@ function CartScreen() {
                   </Col>
                   <Col md={3}>
                     <Link
-                      to={`/product/${item._id}`}
+                      to={`/products/${item._id}`}
                       style={{ color: "black", textDecoration: "none" }}
                     >
                       {item.name}

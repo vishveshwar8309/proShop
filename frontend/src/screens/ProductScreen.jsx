@@ -19,6 +19,7 @@ import {
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { addToCart } from "../slices/cartSlice";
+import Meta from "../components/Meta";
 
 function ProductScreen() {
   const { id: productId } = useParams();
@@ -70,6 +71,7 @@ function ProductScreen() {
         </Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={4}>
               <Image src={product.image} alt={product.name} fluid />

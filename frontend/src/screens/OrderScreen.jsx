@@ -1,14 +1,6 @@
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  Form,
-  Button,
-  Row,
-  Col,
-  ListGroup,
-  Image,
-  Card,
-} from "react-bootstrap";
+import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -75,11 +67,11 @@ const OrderScreen = () => {
     });
   }
 
-  async function onApproveTest() {
-    await payOrder({ orderId, details: { payer: {} } }).unwrap();
-    refetch();
-    toast.success("Payment Successful");
-  }
+  // async function onApproveTest() {
+  //   await payOrder({ orderId, details: { payer: {} } }).unwrap();
+  //   refetch();
+  //   toast.success("Payment Successful");
+  // }
 
   function onError(err) {
     toast.error(err.message);
@@ -175,7 +167,7 @@ const OrderScreen = () => {
                   </Col>
                   <Col>
                     <Link
-                      to={`/product/${item.product}`}
+                      to={`/products/${item.product}`}
                       style={{ color: "inherit", textDecoration: "none" }}
                     >
                       {item.name}
